@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WALL STREET ALGORITHM</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0c0f1a;
+    color: #fff;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+    background: #12162b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 40px;
+}
+
+.hero p {
+    color: #aaa;
+}
+
+.bots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px;
+    gap: 20px;
+}
+
+.bot {
+    background: #161a2f;
+    padding: 20px;
+    width: 260px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+
+.bot:hover {
+    transform: scale(1.05);
+}
+
+.bot.selected {
+    border: 2px solid #00ffcc;
+}
+
+.bot h3 {
+    margin-top: 0;
+}
+
+.bot .returns {
+    color: #00ffcc;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.bot .price {
+    color: #ffcc00;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.payment {
+    text-align: center;
+    padding: 40px;
+    display: none;
+}
+
+.payment-box {
+    background: #161a2f;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.testimonials {
+    padding: 40px;
+    text-align: center;
+}
+
+.testimonial-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.testimonial {
+    background: #161a2f;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.testimonial img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.form-section {
+    padding: 40px;
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+    background: #00ffcc;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<header>WALL STREET ALGORITHM</header>
+
+<section class="hero">
+    <h1>Automated Trading Bots</h1>
+    <p>Generate passive income with our high-performance trading algorithms.</p>
+</section>
+
+<section class="bots">
+    
+    <div class="bot" onclick="selectBot(this, '200 USDT', 'TXYZ12345Starter', 'TRC20')">
+        <h3>Starter Bot</h3>
+        <p class="price">Price: 200 USDT</p>
+        <p class="returns">+15% Weekly</p>
+        <p>Low risk automated trading</p>
+    </div>
+
+    <div class="bot" onclick="selectBot(this, '500 USDT', '0xABCDEF12345Pro', 'ERC20')">
+        <h3>Pro Bot</h3>
+        <p class="price">Price: 500 USDT</p>
+        <p class="returns">+25% Weekly</p>
+        <p>Balanced performance</p>
+    </div>
+
+    <div class="bot" onclick="selectBot(this, '1000 USDT', 'TXYZ67890Advanced', 'TRC20')">
+        <h3>Advanced Bot</h3>
+        <p class="price">Price: 1000 USDT</p>
+        <p class="returns">+40% Weekly</p>
+        <p>High frequency strategy</p>
+    </div>
+
+    <div class="bot" onclick="selectBot(this, '2000 USDT', '0xFEDCBA67890VIP', 'ERC20')">
+        <h3>VIP Bot</h3>
+        <p class="price">Price: 2000 USDT</p>
+        <p class="returns">+60% Weekly</p>
+        <p>Premium trading system</p>
+    </div>
+
+</section>
+
+<section class="payment" id="paymentSection">
+    <div class="payment-box">
+        <h2>Payment</h2>
+        <p>Send USDT to the address below:</p>
+        <p id="amount"></p>
+        <p id="wallet"></p>
+        <p id="network"></p>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2>What Our Users Say</h2>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg">
+            <p>"I made consistent profit every week!"</p>
+            <strong>James K.</strong>
+        </div>
+
+        <div class="testimonial">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg">
+            <p>"Best trading bot I've used so far."</p>
+            <strong>Linda S.</strong>
+        </div>
+
+        <div class="testimonial">
+            <img src="https://randomuser.me/api/portraits/men/55.jpg">
+            <p>"Very reliable and easy to use."</p>
+            <strong>Michael T.</strong>
+        </div>
+
+    </div>
+</section>
+
+<section class="form-section">
+    <h2>Get Started</h2>
+
+    <form>
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <textarea placeholder="Message"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+<footer>
+    © 2026 WALL STREET ALGORITHM. All rights reserved.
+</footer>
+
+<script>
+function selectBot(element, price, address, network) {
+    document.querySelectorAll('.bot').forEach(bot => bot.classList.remove('selected'));
+    element.classList.add('selected');
+
+    document.getElementById('paymentSection').style.display = 'block';
+    document.getElementById('amount').innerText = "Amount: " + price;
+    document.getElementById('wallet').innerText = "USDT Address: " + address;
+    document.getElementById('network').innerText = "Network: " + network;
+}
+</script>
+
+</body>
+</html>
