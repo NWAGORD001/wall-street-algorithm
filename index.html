@@ -146,10 +146,81 @@ footer {
     padding: 20px;
     color: #777;
 }
+
+/* ================= POPUP ================= */
+#upgradePopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popupBox {
+    background: #111;
+    color: #fff;
+    max-width: 420px;
+    width: 90%;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: left;
+    position: relative;
+    border: 1px solid #00ffcc;
+}
+
+.popupBox h2 {
+    margin-top: 0;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 22px;
+}
 </style>
 </head>
 
 <body>
+
+<!-- ================= POPUP START ================= -->
+<div id="upgradePopup">
+  <div class="popupBox">
+
+    <span class="closeBtn" onclick="closePopup()">&times;</span>
+
+    <h2>🚨 System Upgrade Notice</h2>
+
+    <p>We’ve completed a major system maintenance and upgrade to improve bot performance, accuracy, and execution speed.</p>
+
+    <h3>🔄 Reactivation Required</h3>
+    <p>All previously purchased bots must be reactivated to access the upgraded system.</p>
+
+    <p><strong>Reactivation Fee:</strong> 50% of your original plan</p>
+
+    <h4>📊 Examples:</h4>
+    <ul>
+      <li>200 USDT → 100 USDT activation</li>
+      <li>500 USDT → 250 USDT activation</li>
+      <li>1000 USDT → 500 USDT activation</li>
+    </ul>
+
+    <h3>💡 Why This Fee?</h3>
+    <p>This covers upgraded algorithms, improved risk management, and enhanced system performance.</p>
+
+    <button onclick="closePopup()" style="width:100%; padding:12px; margin-top:15px; background:#00c896; border:none; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer;">
+      I Understand
+    </button>
+
+  </div>
+</div>
+<!-- ================= POPUP END ================= -->
 
 <header>WALL STREET ALGORITHM</header>
 
@@ -159,29 +230,29 @@ footer {
 </section>
 
 <section class="bots">
-    
-    <div class="bot" onclick="selectBot(this, '200 USDT', 'TXYZ12345Starter', 'TRC20')">
+
+    <div class="bot" onclick="selectBot(this, '200 USDT', 'TNcgtrzYHDKN5wAhoHHhJzLHv5Gbr7z1DJ', 'TRC20')">
         <h3>Starter Bot</h3>
         <p class="price">Price: 200 USDT</p>
         <p class="returns">+15% Weekly</p>
         <p>Low risk automated trading</p>
     </div>
 
-    <div class="bot" onclick="selectBot(this, '500 USDT', '0xABCDEF12345Pro', 'ERC20')">
+    <div class="bot" onclick="selectBot(this, '500 USDT', '0x6ab4e0721a7b2c84d2379a2a035a41386b72b1d2', 'ERC20')">
         <h3>Pro Bot</h3>
         <p class="price">Price: 500 USDT</p>
         <p class="returns">+25% Weekly</p>
         <p>Balanced performance</p>
     </div>
 
-    <div class="bot" onclick="selectBot(this, '1000 USDT', 'TXYZ67890Advanced', 'TRC20')">
+    <div class="bot" onclick="selectBot(this, '1000 USDT', 'TNcgtrzYHDKN5wAhoHHhJzLHv5Gbr7z1DJ', 'TRC20')">
         <h3>Advanced Bot</h3>
         <p class="price">Price: 1000 USDT</p>
         <p class="returns">+40% Weekly</p>
         <p>High frequency strategy</p>
     </div>
 
-    <div class="bot" onclick="selectBot(this, '2000 USDT', '0xFEDCBA67890VIP', 'ERC20')">
+    <div class="bot" onclick="selectBot(this, '2000 USDT', '0x6ab4e0721a7b2c84d2379a2a035a41386b72b1d2', 'ERC20')">
         <h3>VIP Bot</h3>
         <p class="price">Price: 2000 USDT</p>
         <p class="returns">+60% Weekly</p>
@@ -202,6 +273,10 @@ footer {
 
 <section class="testimonials">
     <h2>What Our Users Say</h2>
+</section>
+
+<section class="testimonials">
+    <h2>VERIFIED TRADERS</h2>
 
     <div class="testimonial-grid">
 
@@ -222,6 +297,27 @@ footer {
             <p>"Very reliable and easy to use."</p>
             <strong>Michael T.</strong>
         </div>
+
+        <div class="testimonial">
+            <img src="https://i.pravatar.cc/100?img=12">
+            <p>"I made consistent profits weekly. System is powerful!"</p>
+            <h4>- Daniel K.</h4>
+        </div>
+
+        <div class="testimonial">
+            <img src="https://i.pravatar.cc/100?img=32">
+            <p>"The bot performance surprised me. Very accurate entries."</p>
+            <h4>- Sarah M.</h4>
+        </div>
+
+        <div class="testimonial">
+            <img src="https://i.pravatar.cc/100?img=45">
+            <p>"Best trading system I’ve used so far."</p>
+            <h4>- Michael T.</h4>
+        </div>
+
+    </div>
+</section>
 
     </div>
 </section>
@@ -251,8 +347,22 @@ function selectBot(element, price, address, network) {
     document.getElementById('wallet').innerText = "USDT Address: " + address;
     document.getElementById('network').innerText = "Network: " + network;
 }
+
+/* POPUP FIXED - ALWAYS SHOWS */
+function showPopup() {
+    document.getElementById('upgradePopup').style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('upgradePopup').style.display = 'none';
+}
+
+window.addEventListener("load", function () {
+    setTimeout(() => {
+        showPopup();
+    }, 1200);
+});
 </script>
-  }
-</script>
+
 </body>
 </html>
