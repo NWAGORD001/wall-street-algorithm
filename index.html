@@ -133,7 +133,7 @@
         }
         .copy-hint { font-size: 0.7rem; color: var(--accent); margin-top: 5px; display: block; text-align: right; }
 
-        /* Legal Disclaimer */
+        /* Disclaimer */
         .disclaimer { padding: 40px 0; font-size: 0.8rem; color: var(--text-muted); text-align: justify; }
         footer { padding: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
     </style>
@@ -161,7 +161,6 @@
     <section class="pricing">
         <div class="container">
             <div class="pricing-grid">
-                <!-- Tier 1 -->
                 <div class="price-card">
                     <div class="tier-name">Starter Algo</div>
                     <span class="old-price">200 USDT</span>
@@ -174,7 +173,6 @@
                     <button class="btn-pay" onclick="openPayment('Starter Algo', '100')">Activate Upgrade</button>
                 </div>
 
-                <!-- Tier 2 -->
                 <div class="price-card" style="border: 2px solid var(--accent);">
                     <div class="tier-name">Professional</div>
                     <span class="old-price">500 USDT</span>
@@ -187,7 +185,6 @@
                     <button class="btn-pay" onclick="openPayment('Professional', '250')">Activate Upgrade</button>
                 </div>
 
-                <!-- Tier 3 -->
                 <div class="price-card">
                     <div class="tier-name">Institutional</div>
                     <span class="old-price">1000 USDT</span>
@@ -222,7 +219,7 @@
                 <div class="pay-item">
                     <label>Wallet Address (Click to Copy):</label>
                     <div class="wallet-container" onclick="copyAddress()">
-                        <code id="walletAddress">YOUR_TRC20_WALLET_ADDRESS_HERE</code>
+                        <code id="walletAddress">TNcgtrzYHDKN5wAhoHHhJzLHv5Gbr7z1DJ</code>
                         <span class="copy-hint" id="copyText">Click to copy</span>
                     </div>
                 </div>
@@ -256,14 +253,15 @@
 
         function copyAddress() {
             const address = document.getElementById('walletAddress').innerText;
-            navigator.clipboard.writeText(address);
-            const copyText = document.getElementById('copyText');
-            copyText.innerText = "COPIED!";
-            copyText.style.color = "#10b981";
-            setTimeout(() => {
-                copyText.innerText = "Click to copy";
-                copyText.style.color = "#3b82f6";
-            }, 2000);
+            navigator.clipboard.writeText(address).then(() => {
+                const copyText = document.getElementById('copyText');
+                copyText.innerText = "COPIED!";
+                copyText.style.color = "#10b981";
+                setTimeout(() => {
+                    copyText.innerText = "Click to copy";
+                    copyText.style.color = "#3b82f6";
+                }, 2000);
+            });
         }
 
         window.onclick = function(event) {
@@ -271,8 +269,5 @@
             if (event.target == modal) closeModal();
         }
     </script>
-
 </body>
 </html>
-
-            
