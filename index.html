@@ -1,393 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WALL STREET ALGORITHM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Street Algorithm Bot | Professional Trading Solutions</title>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --primary: #0f172a;    /* Deep Navy */
+            --accent: #3b82f6;     /* Trading Blue */
+            --success: #10b981;    /* Profit Green */
+            --warning: #f59e0b;    /* Maintenance Gold */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --bg-card: #1e293b;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #0c0f1a;
-    color: #fff;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--primary); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-header {
-    padding: 20px;
-    text-align: center;
-    background: #12162b;
-    font-size: 24px;
-    font-weight: bold;
-}
+        /* Maintenance Banner */
+        .announcement-bar {
+            background: linear-gradient(90deg, #b45309, #d97706);
+            color: white;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
 
-.hero {
-    text-align: center;
-    padding: 60px 20px;
-}
+        /* Navigation */
+        nav { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
 
-.hero h1 {
-    font-size: 40px;
-}
+        /* Hero */
+        .hero { padding: 80px 0; text-align: center; }
+        .status-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto 30px; }
 
-.hero p {
-    color: #aaa;
-}
+        /* Pricing Table */
+        .pricing { padding: 60px 0; background: #0b1120; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .price-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .price-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .tier-name { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+        .old-price { text-decoration: line-through; color: var(--text-muted); font-size: 1.2rem; }
+        .new-price { font-size: 2.5rem; font-weight: 800; margin: 10px 0; display: block; }
+        .discount-tag { color: var(--success); font-size: 0.9rem; font-weight: bold; }
+        
+        .feature-list { list-style: none; margin: 30px 0; text-align: left; }
+        .feature-list li { margin-bottom: 12px; font-size: 0.9rem; color: var(--text-main); }
+        .feature-list i { color: var(--success); margin-right: 10px; }
 
-.bots {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 40px;
-    gap: 20px;
-}
+        .btn-pay {
+            background: var(--accent);
+            color: white;
+            padding: 15px;
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-pay:hover { background: #2563eb; }
 
-.bot {
-    background: #161a2f;
-    padding: 20px;
-    width: 260px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-    border: 2px solid transparent;
-}
+        /* Modal Styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        .payment-box { background: rgba(15, 23, 42, 0.5); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: left; }
+        .pay-item { margin-bottom: 15px; }
+        .pay-item label { display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
+        .wallet-container { position: relative; cursor: pointer; }
+        .wallet-container code {
+            display: block;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 6px;
+            word-break: break-all;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            font-size: 0.85rem;
+        }
+        .copy-hint { font-size: 0.7rem; color: var(--accent); margin-top: 5px; display: block; text-align: right; }
 
-.bot:hover {
-    transform: scale(1.05);
-}
-
-.bot.selected {
-    border: 2px solid #00ffcc;
-}
-
-.bot h3 {
-    margin-top: 0;
-}
-
-.bot .returns {
-    color: #00ffcc;
-    font-size: 20px;
-    margin: 10px 0;
-}
-
-.bot .price {
-    color: #ffcc00;
-    font-size: 18px;
-    margin: 5px 0;
-}
-
-.payment {
-    text-align: center;
-    padding: 40px;
-    display: none;
-}
-
-.payment-box {
-    background: #161a2f;
-    padding: 20px;
-    border-radius: 10px;
-    display: inline-block;
-}
-
-.testimonials {
-    padding: 40px;
-    text-align: center;
-}
-
-.testimonial-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.testimonial {
-    background: #161a2f;
-    padding: 20px;
-    border-radius: 10px;
-    width: 250px;
-}
-
-.testimonial img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-
-.form-section {
-    padding: 40px;
-    text-align: center;
-}
-
-form {
-    max-width: 400px;
-    margin: auto;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: none;
-}
-
-button {
-    padding: 10px;
-    width: 100%;
-    background: #00ffcc;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #777;
-}
-
-/* ================= POPUP ================= */
-#upgradePopup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-.popupBox {
-    background: #111;
-    color: #fff;
-    max-width: 420px;
-    width: 90%;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: left;
-    position: relative;
-    border: 1px solid #00ffcc;
-}
-
-.popupBox h2 {
-    margin-top: 0;
-}
-
-.closeBtn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 22px;
-}
-</style>
+        /* Legal Disclaimer */
+        .disclaimer { padding: 40px 0; font-size: 0.8rem; color: var(--text-muted); text-align: justify; }
+        footer { padding: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+    </style>
 </head>
-
 <body>
 
-<!-- ================= POPUP START ================= -->
-<div id="upgradePopup">
-  <div class="popupBox">
-
-    <span class="closeBtn" onclick="closePopup()">&times;</span>
-
-    <h2>🚨 System Upgrade Notice</h2>
-
-    <p>We’ve completed a major system maintenance and upgrade to improve bot performance, accuracy, and execution speed.</p>
-
-    <h3>🔄 Reactivation Required</h3>
-    <p>All previously purchased bots must be reactivated to access the upgraded system.</p>
-
-    <p><strong>Reactivation Fee:</strong> 50% of your original plan</p>
-
-    <h4>📊 Examples:</h4>
-    <ul>
-      <li>200 USDT → 100 USDT activation</li>
-      <li>500 USDT → 250 USDT activation</li>
-      <li>1000 USDT → 500 USDT activation</li>
-    </ul>
-
-    <h3>💡 Why This Fee?</h3>
-    <p>This covers upgraded algorithms, improved risk management, and enhanced system performance.</p>
-
-    <button onclick="closePopup()" style="width:100%; padding:12px; margin-top:10px; background:#00c896; border:none; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer;">
-      I Understand
-    </button>
-
-    <!-- NEW BUTTON -->
-    <button onclick="reactivateBot()" style="width:100%; padding:12px; margin-top:10px; background:#ffcc00; border:none; border-radius:6px; color:#000; font-weight:bold; cursor:pointer;">
-      Reactivate Now (Pay 50%)
-    </button>
-
-  </div>
-</div>
-<!-- ================= POPUP END ================= -->
-
-<header>WALL STREET ALGORITHM</header>
-
-<section class="hero">
-    <h1>Automated Trading Bots</h1>
-    <p>Generate passive income with our high-performance trading algorithms.</p>
-</section>
-
-<section class="bots">
-
-    <div class="bot" onclick="selectBot(this, '200 USDT', 'TNcgtrzYHDKN5wAhoHHhJzLHv5Gbr7z1DJ', 'TRC20')">
-        <h3>Starter Bot</h3>
-        <p class="price">Price: 200 USDT</p>
-        <p class="returns">+15% Weekly</p>
-        <p>Low risk automated trading</p>
+    <div class="announcement-bar">
+        <i class="fas fa-tools"></i> MAINTENANCE COMPLETED: Systems upgraded. Previous users receive 50% activation discount.
     </div>
 
-    <div class="bot" onclick="selectBot(this, '500 USDT', '0x6ab4e0721a7b2c84d2379a2a035a41386b72b1d2', 'ERC20')">
-        <h3>Pro Bot</h3>
-        <p class="price">Price: 500 USDT</p>
-        <p class="returns">+25% Weekly</p>
-        <p>Balanced performance</p>
+    <nav>
+        <div class="container">
+            <div class="logo">WALL STREET <span>ALGO BOT</span></div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="status-badge">V2.0 UPGRADE LIVE</div>
+            <h1>The Evolution of <br>Automated Trading</h1>
+            <p>Our scheduled maintenance is now complete. Existing licenses require a 50% activation fee to sync with the new core and liquidity filters.</p>
+        </div>
+    </header>
+
+    <section class="pricing">
+        <div class="container">
+            <div class="pricing-grid">
+                <!-- Tier 1 -->
+                <div class="price-card">
+                    <div class="tier-name">Starter Algo</div>
+                    <span class="old-price">200 USDT</span>
+                    <span class="new-price">100 USDT</span>
+                    <span class="discount-tag">50% Discount Applied</span>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Basic Market Analysis</li>
+                        <li><i class="fas fa-check"></i> 1 Active Trading Pair</li>
+                    </ul>
+                    <button class="btn-pay" onclick="openPayment('Starter Algo', '100')">Activate Upgrade</button>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="price-card" style="border: 2px solid var(--accent);">
+                    <div class="tier-name">Professional</div>
+                    <span class="old-price">500 USDT</span>
+                    <span class="new-price">250 USDT</span>
+                    <span class="discount-tag">50% Discount Applied</span>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> High-Speed Execution</li>
+                        <li><i class="fas fa-check"></i> 5 Active Trading Pairs</li>
+                    </ul>
+                    <button class="btn-pay" onclick="openPayment('Professional', '250')">Activate Upgrade</button>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="price-card">
+                    <div class="tier-name">Institutional</div>
+                    <span class="old-price">1000 USDT</span>
+                    <span class="new-price">500 USDT</span>
+                    <span class="discount-tag">50% Discount Applied</span>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Unlimited Trading Pairs</li>
+                        <li><i class="fas fa-check"></i> Dedicated VPS Support</li>
+                    </ul>
+                    <button class="btn-pay" onclick="openPayment('Institutional', '500')">Activate Upgrade</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAYMENT MODAL -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTier">Plan Name</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Transfer the activation fee to the secure address below.</p>
+            
+            <div class="payment-box">
+                <div class="pay-item">
+                    <label>Amount to Send:</label>
+                    <strong id="modalAmount" style="color: var(--success); font-size: 1.2rem;">0.00 USDT</strong>
+                </div>
+                <div class="pay-item">
+                    <label>Network:</label>
+                    <strong style="color: var(--warning);">USDT (TRC-20)</strong>
+                </div>
+                <div class="pay-item">
+                    <label>Wallet Address (Click to Copy):</label>
+                    <div class="wallet-container" onclick="copyAddress()">
+                        <code id="walletAddress">YOUR_TRC20_WALLET_ADDRESS_HERE</code>
+                        <span class="copy-hint" id="copyText">Click to copy</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 0.75rem; color: var(--text-muted);">
+                <i class="fas fa-sync-alt"></i> Systems will sync automatically after 3 network confirmations.
+            </p>
+            <button class="btn-pay" style="margin-top: 20px;" onclick="closeModal()">Confirm Transfer</button>
+        </div>
     </div>
 
-    <div class="bot" onclick="selectBot(this, '1000 USDT', 'TNcgtrzYHDKN5wAhoHHhJzLHv5Gbr7z1DJ', 'TRC20')">
-        <h3>Advanced Bot</h3>
-        <p class="price">Price: 1000 USDT</p>
-        <p class="returns">+40% Weekly</p>
-        <p>High frequency strategy</p>
-    </div>
+    <section class="disclaimer container">
+        <p><strong>IMPORTANT:</strong> Activation fees are non-refundable and cover the cost of infrastructure migration. Ensure you are sending via the <strong>TRC-20</strong> network to avoid loss of funds.</p>
+    </section>
 
-    <div class="bot" onclick="selectBot(this, '2000 USDT', '0x6ab4e0721a7b2c84d2379a2a035a41386b72b1d2', 'ERC20')">
-        <h3>VIP Bot</h3>
-        <p class="price">Price: 2000 USDT</p>
-        <p class="returns">+60% Weekly</p>
-        <p>Premium trading system</p>
-    </div>
+    <footer>
+        <p>&copy; 2026 Wall Street Algorithm Bot. All Rights Reserved.</p>
+    </footer>
 
-</section>
+    <script>
+        function openPayment(tier, amount) {
+            document.getElementById('modalTier').innerText = tier;
+            document.getElementById('modalAmount').innerText = amount + " USDT";
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
 
-<section class="payment" id="paymentSection">
-    <div class="payment-box">
-        <h2>Payment</h2>
-        <p>Send USDT to the address below:</p>
-        <p id="amount"></p>
-        <p id="wallet"></p>
-        <p id="network"></p>
-    </div>
-</section>
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
 
-<section class="testimonials">
-    <h2>What Our Users Say</h2>
-</section>
+        function copyAddress() {
+            const address = document.getElementById('walletAddress').innerText;
+            navigator.clipboard.writeText(address);
+            const copyText = document.getElementById('copyText');
+            copyText.innerText = "COPIED!";
+            copyText.style.color = "#10b981";
+            setTimeout(() => {
+                copyText.innerText = "Click to copy";
+                copyText.style.color = "#3b82f6";
+            }, 2000);
+        }
 
-<section class="testimonials">
-    <h2>VERIFIED TRADERS</h2>
-
-    <div class="testimonial-grid">
-
-        <div class="testimonial">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg">
-            <p>"I made consistent profit every week!"</p>
-            <strong>James K.</strong>
-        </div>
-
-        <div class="testimonial">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg">
-            <p>"Best trading bot I've used so far."</p>
-            <strong>Linda S.</strong>
-        </div>
-
-        <div class="testimonial">
-            <img src="https://randomuser.me/api/portraits/men/55.jpg">
-            <p>"Very reliable and easy to use."</p>
-            <strong>Michael T.</strong>
-        </div>
-
-        <div class="testimonial">
-            <img src="https://i.pravatar.cc/100?img=12">
-            <p>"I made consistent profits weekly. System is powerful!"</p>
-            <h4>- Daniel K.</h4>
-        </div>
-
-        <div class="testimonial">
-            <img src="https://i.pravatar.cc/100?img=32">
-            <p>"The bot performance surprised me. Very accurate entries."</p>
-            <h4>- Sarah M.</h4>
-        </div>
-
-        <div class="testimonial">
-            <img src="https://i.pravatar.cc/100?img=45">
-            <p>"Best trading system I’ve used so far."</p>
-            <h4>- Michael T.</h4>
-        </div>
-
-    </div>
-</section>
-
-<section class="form-section">
-    <h2>Get Started</h2>
-
-    <form>
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email Address" required>
-        <textarea placeholder="Message"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-</section>
-
-<footer>
-    © 2026 WALL STREET ALGORITHM. All rights reserved.
-</footer>
-
-<script>
-let selectedPrice = 0;
-let selectedAddress = "";
-let selectedNetwork = "";
-
-function selectBot(element, price, address, network) {
-    document.querySelectorAll('.bot').forEach(bot => bot.classList.remove('selected'));
-    element.classList.add('selected');
-
-    selectedPrice = parseInt(price);
-    selectedAddress = address;
-    selectedNetwork = network;
-
-    document.getElementById('paymentSection').style.display = 'block';
-    document.getElementById('amount').innerText = "Amount: " + price;
-    document.getElementById('wallet').innerText = "USDT Address: " + address;
-    document.getElementById('network').innerText = "Network: " + network;
-}
-
-function reactivateBot() {
-    if (!selectedPrice) {
-        alert("⚠️ Please select a bot first.");
-        return;
-    }
-
-    let halfPrice = selectedPrice / 2;
-
-    document.getElementById('paymentSection').style.display = 'block';
-    document.getElementById('amount').innerText = "Reactivation Amount: " + halfPrice + " USDT";
-    document.getElementById('wallet').innerText = "USDT Address: " + selectedAddress;
-    document.getElementById('network').innerText = "Network: " + selectedNetwork;
-
-    closePopup();
-}
-
-function showPopup() {
-    document.getElementById('upgradePopup').style.display = 'flex';
-}
-
-function closePopup() {
-    document.getElementById('upgradePopup').style.display = 'none';
-}
-
-window.addEventListener("load", function () {
-    setTimeout(() => {
-        showPopup();
-    }, 1200);
-});
-</script>
+        window.onclick = function(event) {
+            let modal = document.getElementById('paymentModal');
+            if (event.target == modal) closeModal();
+        }
+    </script>
 
 </body>
 </html>
+
+            
